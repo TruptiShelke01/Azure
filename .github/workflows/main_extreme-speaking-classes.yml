@@ -1,3 +1,6 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
 name: Build and deploy PHP app to Azure Web App - Extreme-Speaking-classes
 
 on:
@@ -29,7 +32,7 @@ jobs:
         run: composer validate --no-check-publish && composer install --prefer-dist --no-progress
 
       - name: Zip artifact for deployment
-        run: zip -r release.zip ./*
+        run: zip release.zip ./* -r
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -44,7 +47,7 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write # Required for requesting the JWT
+      id-token: write #This is required for requesting the JWT
 
     steps:
       - name: Download artifact from build job
@@ -54,13 +57,13 @@ jobs:
 
       - name: Unzip artifact for deployment
         run: unzip release.zip
-
+      
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_46B2125F1F384EA3902B94DC5D7550CB }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_A40D503CDAFC494989A203D4C79FD14A }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_E0A8226CB33442939EA1174849BB2562 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_C6E4365E1F2A4B4FB47429576319D982 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_E20014B9A91E4778A488B21B0C5B279B }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_36971EC4FBDD424AA4786495CA4290F9 }}
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
@@ -69,3 +72,4 @@ jobs:
           app-name: 'Extreme-Speaking-classes'
           slot-name: 'Production'
           package: .
+          
